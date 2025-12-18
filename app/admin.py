@@ -45,7 +45,7 @@ def add_asset():
         return redirect(url_for('admin.admin_dashboard'))
     return render_template('admin/add_asset.html', form=form)
 
-@admin.route('/delete/<int:asset_id>')
+@admin.route('/delete/<int:asset_id>', methods=['POST'])
 @login_required
 @admin_required
 #function to delete assets from master list (deletes a record in database)
@@ -111,7 +111,7 @@ def edit_user(user_id):
     return render_template('admin/edit_user.html', user=user, form=form)
 
 #function to allow admins to delete users
-@admin.route('/delete_user/<int:user_id>', methods=['GET', 'POST'])
+@admin.route('/delete_user/<int:user_id>', methods=['POST'])
 @login_required
 def delete_user(user_id):
     if current_user.role != 'admin':
@@ -129,7 +129,7 @@ def delete_user(user_id):
     return redirect(url_for('admin.user_list'))
 
 #function to promote users to admin
-@admin.route('/promote/<int:user_id>', methods=['GET', 'POST'])
+@admin.route('/promote/<int:user_id>', methods=['POST'])
 @login_required
 def promote_user(user_id):
     if current_user.role != 'admin':
@@ -166,7 +166,7 @@ def view_user_collection(user_id):
     return render_template('admin/user_collection.html', user=user, assets=assets, all_assets=all_assets)
 
 #function to remove assets from user collections
-@admin.route('/collections/<int:user_id>/remove/<int:asset_id>')
+@admin.route('/collections/<int:user_id>/remove/<int:asset_id>', methods=['POST'])
 @login_required
 def remove_asset(user_id, asset_id):
     if current_user.role != 'admin':
