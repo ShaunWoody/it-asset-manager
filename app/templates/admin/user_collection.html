@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}{{ user.username }}'s Collection{% endblock %}
+{% block content %}
+<h2>{{ user.username }}'s Asset Collection</h2>
+
+<h4>Current assets:</h4>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Asset Tag</th>
+      <th>Asset Type</th>
+      <th>Location</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for asset in assets %}
+      <tr>
+        <td>{{ asset.name }}</td>
+        <td>{{ asset.asset_tag }}</td>
+        <td>{{ asset.asset_type }}</td>
+        <td>{{ asset.location }}</td>
+        <td>
+          <a href="{{ url_for('admin.remove_asset', user_id=user.id, asset_id=asset.id) }}"
+             class="btn btn-danger btn-sm"
+             onclick="return confirm('Remove this asset from the user?');">
+            Remove
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h4 class="mt-4">Add New asset to Collection:</h4>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Asset Tag</th>
+      <th>Asset Type</th>
+      <th>Location</th>
+      <th>Add</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for asset in all_assets %}
+      {% if asset not in assets %}
+      <tr>
+        <td>{{ asset.name }}</td>
+        <td>{{ asset.asset_tag }}</td>
+        <td>{{ asset.asset_type }}</td>
+        <td>{{ asset.location }}</td>
+        <td>
+          <form action="{{ url_for('admin.add_asset_user', user_id=user.id, asset_id=asset.id) }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-sm btn-primary" type="submit">Add</button>
+          </form>
+        </td>
+      </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
+
+<a class="btn btn-secondary btn-danger mt-4" href="{{ url_for('admin.all_collections') }}">Back</a>
+{% endblock %}

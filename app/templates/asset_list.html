@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}All Assets{% endblock %}
+
+{% block content %}
+<h2>All Assets</h2>
+
+{% if assets %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Asset Tag</th>
+      <th>Asset Type</th>
+      <th>Location</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for asset in assets %}
+    <tr>
+      <td>{{ asset.name }}</td>
+      <td>{{ asset.asset_tag }}</td>
+      <td>{{ asset.asset_type }}</td>
+      <td>{{ asset.location }}</td>
+      <td>
+        <a href="{{ url_for('routes.collect_asset', asset_id=asset.id) }}" class="btn btn-sm btn-primary">
+          Add to Collection
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No assets available.</p>
+{% endif %}
+{% endblock %}

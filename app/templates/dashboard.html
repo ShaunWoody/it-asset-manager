@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="text-center">
+  <h1>Welcome to GMC Asset Manager</h1>
+  <p class="lead">You are logged in as <strong>{{ current_user.username }}</strong>.</p>
+
+  <a class="btn btn-primary mb-3 me-2" href="{{ url_for('routes.asset_list') }}">All Assets</a>
+  <a class="btn btn-primary mb-3 me-2" href="{{ url_for('routes.my_collection') }}">My Collection</a>
+</div>
+{% endblock %}

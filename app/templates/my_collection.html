@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}My Collection{% endblock %}
+
+{% block content %}
+<h2>My Asset Collection</h2>
+
+{% if collection %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Asset Tag</th>
+      <th>Asset Type</th>
+      <th>Location</th>
+      {% if current_user.role == 'admin' %}
+      <th>Actions</th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in collection %}
+    <tr>
+      <td>{{ entry.asset.name }}</td>
+      <td>{{ entry.asset.asset_tag }}</td>
+      <td>{{ entry.asset.asset_type }}</td>
+      <td>{{ entry.asset.location }}</td>
+      {% if current_user.role == 'admin' %}
+      <td>
+        <a href="{{ url_for('routes.remove_asset', asset_id=entry.asset.id) }}" class="btn btn-sm btn-danger"
+           onclick="return confirm('Are you sure you want to remove this asset?');">
+          Remove
+        </a>
+      </td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>You haven't added any assets to your collection yet.</p>
+{% endif %}
+{% endblock %}
