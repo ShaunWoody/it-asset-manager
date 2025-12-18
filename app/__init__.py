@@ -10,18 +10,19 @@ login_manager = LoginManager()
 csrf = CSRFProtect()
 
 from dotenv import load_dotenv
-load_dotenv()
+
 
 def create_app():
+    load_dotenv()
     app = Flask(__name__)
-    #secret key, this should be randomised for production
+    #secret key, this should be randomised for production - loads from our .env file - if not found uses default value
     app.config['SECRET_KEY'] = os.environ.get(
         'SECRET_KEY',
-        ''
+        'dev-placeholder'
     )
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
         'DATABASE_URL',
-        ''
+        'sqlite:///assets.db'
     )
 
     db.init_app(app)
@@ -36,13 +37,7 @@ def create_app():
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(routes_blueprint)
     app.register_blueprint(admin_blueprint)
-
-    # ensure database tables are created based on the current models
-    # (SQLite won't create tables until we explicitly do so)
-    with app.app_context():
-        from . import models  # noqa: F401
-        db.create_all()
-
+    login_manager.login_view = "auth.login"
     
 
     return app

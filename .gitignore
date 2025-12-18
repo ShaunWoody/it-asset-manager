@@ -8,13 +8,6 @@ __pycache__/
 venv/
 .venv/
 
-# Databases
-*.db
-*.sqlite3
-
-# Flask
-instance/
-
 # OS files
 .DS_Store
 Thumbs.db
