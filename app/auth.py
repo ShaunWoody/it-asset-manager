@@ -11,7 +11,7 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 #gets the current userid and stores it in the flask session
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 #logs the user in, checks database for the user login
 @auth.route('/login', methods=['GET', 'POST'])
