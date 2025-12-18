@@ -32,7 +32,7 @@ Make sure test are ran in venv
 
 # Accounts for testing
 
-Regular User - Username: user1 Password: test123
+Regular User - Username: user Password: test123
 Admin User - Username: admin Password: test123
 
 # Usage
