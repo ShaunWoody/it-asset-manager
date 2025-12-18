@@ -1,6 +1,6 @@
 /* some custom css to style it more towards our theme */
 .bg-red {
-  background-color: #1f1c1c!important;
+  background-color: #145885!important;
 }
 
 .navbar .nav-link {
@@ -13,12 +13,12 @@
 }
 
 body {
-  background-color: #313030; 
-  color: #f5f5f5; 
+  background-color: transparent; 
+  color: #145885; 
 }
 
 .btn {
-  background-color: #56565a;
+  background-color: #145885;
   border: none;
   color: #fff;
 }
