@@ -16,19 +16,22 @@
   </thead>
   <tbody>
     {% for asset in assets %}
-      <tr>
-        <td>{{ asset.name }}</td>
-        <td>{{ asset.asset_tag }}</td>
-        <td>{{ asset.asset_type }}</td>
-        <td>{{ asset.location }}</td>
-        <td>
-          <a href="{{ url_for('admin.remove_asset', user_id=user.id, asset_id=asset.id) }}"
-             class="btn btn-danger btn-sm"
-             onclick="return confirm('Remove this asset from the user?');">
+    <tr>
+      <td>{{ asset.name }}</td>
+      <td>{{ asset.asset_tag }}</td>
+      <td>{{ asset.asset_type }}</td>
+      <td>{{ asset.location }}</td>
+      <td>
+        <form method="post" action="{{ url_for('admin.remove_asset', user_id=user.id, asset_id=asset.id) }}"
+          style="display:inline;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="btn btn-danger btn-sm"
+            onclick="return confirm('Remove this asset from the user?');">
             Remove
-          </a>
-        </td>
-      </tr>
+          </button>
+        </form>
+      </td>
+    </tr>
     {% endfor %}
   </tbody>
 </table>
@@ -46,20 +49,20 @@
   </thead>
   <tbody>
     {% for asset in all_assets %}
-      {% if asset not in assets %}
-      <tr>
-        <td>{{ asset.name }}</td>
-        <td>{{ asset.asset_tag }}</td>
-        <td>{{ asset.asset_type }}</td>
-        <td>{{ asset.location }}</td>
-        <td>
-          <form action="{{ url_for('admin.add_asset_user', user_id=user.id, asset_id=asset.id) }}" method="post">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-            <button class="btn btn-sm btn-primary" type="submit">Add</button>
-          </form>
-        </td>
-      </tr>
-      {% endif %}
+    {% if asset not in assets %}
+    <tr>
+      <td>{{ asset.name }}</td>
+      <td>{{ asset.asset_tag }}</td>
+      <td>{{ asset.asset_type }}</td>
+      <td>{{ asset.location }}</td>
+      <td>
+        <form action="{{ url_for('admin.add_asset_user', user_id=user.id, asset_id=asset.id) }}" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn btn-sm btn-primary" type="submit">Add</button>
+        </form>
+      </td>
+    </tr>
+    {% endif %}
     {% endfor %}
   </tbody>
 </table>
